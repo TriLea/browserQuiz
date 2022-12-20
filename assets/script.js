@@ -1,32 +1,46 @@
-var highscores = document.querySelector("#highscores-page");
-
-highscores.addEventListener("click", () => {});
-
+var highscores = document.getElementById("highscores-page");
+console.log("script load");
+highscores.addEventListener("click", startTimer());
+// start.addEventListener("click", () => {startTimer});
+// startTimer();
 var quesitons = 
 [
     {
-        //idk how to build one of these
+        title: "what is html",
+        choices: ["html","null","null","null"],
+        correctAnswer: "html"
     },
     {
-
+        title: "what is html",
+        choices: ["html","null","null","null"],
+        correctAnswer: "html"
     },
     {
-
+        title: "what is html",
+        choices: ["html","null","null","null"],
+        correctAnswer: "html"
     },
     {
-
-    },
-    {
-
+        title: "what is html",
+        choices: ["html","null","null","null"],
+        correctAnswer: "html"
     },
 ]
 
 function startTimer()
 {
-    //on any start button
+    console.log("start timer ");
+    setInterval(timerCallback, 1000);
 }
 
 function getQuestion()
 {
     //on submit
+}
+timer = 100;
+
+function timerCallback()
+{
+    console.log(timer);
+    timer--;
 }
