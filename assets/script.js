@@ -1,26 +1,26 @@
 //dom hooks to connect to index.html
 var highscores = document.getElementById("highscores-page");
 var timer = document.getElementById("timer");
+var startButton = document.getElementById("start");
+var question = document.getElementById("question");
 var place1 = document.getElementById("place1");
 var place2 = document.getElementById("place2");
 var place3 = document.getElementById("place3");
 var place4 = document.getElementById("place4");
-var page = 0;
-timer = 100;
+var submit = document.getElementById("submit");
+var time = 100;
+var currentQuestion = 0;
+var timerObj;
 
-// will use later for another html page for highscores
-var scores;
-var homepage = 0; // set page equal to selected page to change
+console.log("script load");
+startButton.addEventListener("click", start);
 
-// console.log("script load");
-// highscores.addEventListener("click", startTimer());
-
-var quesitons = 
+var questions = 
 [
     {
         title: "what is html",
-        choices: ["html","null","null","null"],
-        correctAnswer: "html"
+        choices: ["1","2","3","4"],
+        correctAnswer: "1"
     },
     {
         title: "what is html",
@@ -36,34 +36,70 @@ var quesitons =
         title: "what is html",
         choices: ["html","null","null","null"],
         correctAnswer: "html"
-    },
+    }
 ]
 
 function start()
 {
-    startTimer;
-    quizStart;
-
+    console.log("started");
+    startTimer();
+    getQuestion();
+    
 }
 
 function startTimer()
 {
     console.log("start timer ");
-    setInterval(timerCallback, 1000);
+    timerObj = setInterval(timerCallback, 1000);
 }
 
 function timerCallback()
 {
-    console.log(timer);
-    timer--;
-}
+    if (time <= 0)
+    {
+        saveScore();
+        clearInterval(timerObj);
+    }
 
-function quizStart()
-{
-    
+    console.log(time);
+    timer.innerHTML = time;
+    time--;
 }
 
 function getQuestion()
 {
+    console.log("getQuestion");
+
+    if (questions[currentQuestion] == undefined)
+    {
+        return false;
+    }
+
+    var currentQuestion = questions[currentQuestion++]; //uses current value, and then bumps it up
+    question.innerHTML = currentQuestion.title;
+    place1.innerHTML = currentQuestion.choice[0];
+    place2.innerHTML = currentQuestion.choice[1];
+    place3.innerHTML = currentQuestion.choice[2];
+    place4.innerHTML = currentQuestion.choice[3];
+
+    console.log("go to end of qetQuestion");
+    // if()
+    // {
+
+    // }
+    
+    //displays question
+    //displays submit button
     //on submit
+    //pull next
+    //interupt if out of time
+    //or out of questions
+}
+
+function saveScore()
+{
+    //gets final time,
+    //saves to local storage
+    //update highscores??
+    //displays play again button
 }
