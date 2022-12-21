@@ -4,7 +4,15 @@
     margin: 10px;
 }
 
-header 
+header
+{
+    display: flex;
+    flex-direction: row;   
+    justify-content: space-between; 
+    font-size: 30px;
+}
+
+body
 {
     display: flex;
     flex-direction: row;   
