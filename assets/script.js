@@ -1,5 +1,6 @@
 //dom hooks for initial display
-var highscores = document.getElementById("highscores-page");
+var questionPage = document.getElementById("questionPage");
+var highscores = document.getElementById("highscoresPage");
 var timer = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var question = document.getElementById("Question");
@@ -19,12 +20,13 @@ var p4Label = document.getElementById("place4Label");
 
 var submit = document.getElementById("submit");
 
-var time = 100; //put into seconds formate from set inteval
+var time = 1; //put into seconds formate from set inteval
 var currentQuestion = 0; //used as a index to interate through list of n number of questions in question array
 var timerObj; //holds return of setInerval to save and stop timer
 
 console.log("script load");
 startButton.addEventListener("click", start); //self explanitory
+submit.addEventListener("click", checkAnswer); 
 
 var questions = 
 [
@@ -34,25 +36,26 @@ var questions =
         correctAnswer: "1"
     },
     {
-        title: "what is html",
-        choices: ["html","null","null","null"],
-        correctAnswer: "html"
+        title: "q2",
+        choices: ["a1","a2","a3","a4"],
+        correctAnswer: "a2"
     },
     {
-        title: "what is html",
-        choices: ["html","null","null","null"],
-        correctAnswer: "html"
+        title: "idk3",
+        choices: ["idk3","1","2","3"],
+        correctAnswer: "3"
     },
     {
-        title: "what is html",
-        choices: ["html","null","null","null"],
-        correctAnswer: "html"
+        title: "00",
+        choices: ["01","02","03","04"],
+        correctAnswer: "01"
     }
 ]
 
 function start()
 {
     console.log("started");
+    questionPage.style.display = 'block';
     startTimer();
     getQuestion();
     
@@ -68,6 +71,7 @@ function timerCallback()
 {
     if (time <= 0) //ends timer
     {
+        //display message
         saveScore();
         clearInterval(timerObj);
     }
@@ -81,13 +85,13 @@ function getQuestion() //displays next question, can do any amount
 {
     console.log("getQuestion");
 
-    if (typeof questions[currentQuestion] === undefined)
+    if (questions[currentQuestion] === undefined)
     {
         console.log("returned false");
         return false;
     }
 
-    var currentQuestionLocal = questions[currentQuestion++]; //uses current value, and then bumps it up
+    var currentQuestionLocal = questions[currentQuestion];
     question.innerHTML = currentQuestionLocal.title;
     place1Label.innerHTML = currentQuestionLocal.choices[0];
     place2Label.innerHTML = currentQuestionLocal.choices[1];
@@ -95,23 +99,73 @@ function getQuestion() //displays next question, can do any amount
     place4Label.innerHTML = currentQuestionLocal.choices[3];
 
     console.log("got to end of qetQuestion");
-    // if()
-    // {
-
-    // }
     
-    //displays question
-    //displays submit button
-    //on submit
-    //pull next
-    //interupt if out of time
     //or out of questions
+    return true;
 }
 
 function saveScore() // get this from time
 {
-    //gets final time,
+    // hide everything
+    questionPage.style.display = 'none';
+    var score = time;
     //saves to local storage
     //update highscores??
     //displays play again button
+}
+
+function checkAnswer()
+{
+    var userChoice;
+
+    if (place1.checked)
+    {
+        userChoice = place1Label;
+        place1.checked = false; //clean up
+    } 
+    else if (place2.checked)
+    {
+        userChoice = place2Label;
+        place2.checked = false; //clean up
+    }
+    else if (place3.checked)
+    {
+        userChoice = place3Label;
+        place3.checked = false; //clean up
+    }
+    else if (place4.checked)
+    {
+        userChoice = place4Label;
+        place4.checked = false; //clean up
+    }
+    else
+    {
+        //please select before hitting submit
+        //count as wrong
+    }
+
+    if (userChoice.innerHTML == questions[currentQuestion].correctAnswer)
+    {
+        //correct
+        console.log("correct");
+    }
+    else
+    {
+        //spit message
+        console.log("wrong");
+        time -= 20;
+    }
+
+    
+    currentQuestion++; //bumps it up when we are done with it
+
+    if(!getQuestion())
+    {
+        saveScore();
+    }
+}
+
+function highscoreBoard()
+{
+
 }
