@@ -22,6 +22,7 @@ var submit = document.getElementById("submit");
 
 //DOM hooks for highscore final page
 var saveQuestion = document.getElementById("saveQuestion");
+var saveYesNo = document.getElementById("YesNO");
 var HighscoreDisplay = document.getElementById("Highscores-page");
 
 var time = 200; //in seconds formated by setInterval
@@ -31,6 +32,7 @@ var timerObj; //holds return of setInerval to save and stop timer
 console.log("script load");
 startButton.addEventListener("click", start); //self explanitory
 submit.addEventListener("click", checkAnswer); 
+document.getElementById("Submit2").addEventListener("click", saveYesOrNo);
 
 var questions = 
 [
@@ -58,7 +60,6 @@ var questions =
 
 function start()
 {
-    console.log("started");
     questionPage.style.display = 'block';
     startTimer();
     getQuestion();
@@ -67,7 +68,6 @@ function start()
 
 function startTimer()
 {
-    console.log("start timer ");
     timerObj = setInterval(timerCallback, 1000);
 }
 
@@ -75,23 +75,17 @@ function timerCallback()
 {
     if (time <= 0) //ends timer
     {
-        //why am i saving the score here? shouldnt i do a fail, or check for zero for fail?
-        saveScore();
-        clearInterval(timerObj);
+        testComplete();
     }
 
-    console.log(time);
     timer.innerHTML = time;
     time--;
 }
 
 function getQuestion() //displays next question, can do any amount
 {
-    console.log("getQuestion");
-
-    if (questions[currentQuestion] === undefined)
+    if (!questions[currentQuestion])
     {
-        console.log("returned false");
         return false;
     }
 
@@ -102,17 +96,16 @@ function getQuestion() //displays next question, can do any amount
     place3Label.innerHTML = currentQuestionLocal.choices[2];
     place4Label.innerHTML = currentQuestionLocal.choices[3];
 
-    console.log("got to end of qetQuestion");
     return true;
 }
 
 function saveScore() // get this from time
 {
-    // hide everything
-    questionPage.style.display = 'none';
+    console.log("savescore called");
     var score = time;
 
-    //generate html
+
+    //generate html no no
     //question for initials
     //saves to local storage
     //update highscores??
@@ -166,18 +159,35 @@ function checkAnswer()
 
     if(!getQuestion())
     {
-        saveQuestion.style.display = true;
+        testComplete();
+        
         // meant to be a question here!
         //if true save, capture user input how?
         //button, reuse submit??
-
-        if(result == true)
-        {
-            saveScore();
-        }
-        else
-        {
-            //just print the score to the screen
-        }
     }
+}
+
+function saveYesOrNo()
+{
+    if (saveYesNo.innerHTML == 'Yes')
+    {
+        console.log("savescore hit");
+        saveScore();
+    }
+    else
+    {
+        printScore();
+    }
+}
+
+function printScore()
+{
+    HighscoreDisplay.style.display = 'block';
+}
+
+function testComplete()
+{
+    clearInterval(timerObj);
+    questionPage.style.display = 'none';
+    saveQuestion.style.display = 'block';
 }
