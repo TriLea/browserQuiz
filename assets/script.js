@@ -20,7 +20,11 @@ var p4Label = document.getElementById("place4Label");
 
 var submit = document.getElementById("submit");
 
-var time = 1; //put into seconds formate from set inteval
+//DOM hooks for highscore final page
+var saveQuestion = document.getElementById("saveQuestion");
+var HighscoreDisplay = document.getElementById("Highscores-page");
+
+var time = 200; //in seconds formated by setInterval
 var currentQuestion = 0; //used as a index to interate through list of n number of questions in question array
 var timerObj; //holds return of setInerval to save and stop timer
 
@@ -71,7 +75,7 @@ function timerCallback()
 {
     if (time <= 0) //ends timer
     {
-        //display message
+        //why am i saving the score here? shouldnt i do a fail, or check for zero for fail?
         saveScore();
         clearInterval(timerObj);
     }
@@ -99,8 +103,6 @@ function getQuestion() //displays next question, can do any amount
     place4Label.innerHTML = currentQuestionLocal.choices[3];
 
     console.log("got to end of qetQuestion");
-    
-    //or out of questions
     return true;
 }
 
@@ -109,6 +111,9 @@ function saveScore() // get this from time
     // hide everything
     questionPage.style.display = 'none';
     var score = time;
+
+    //generate html
+    //question for initials
     //saves to local storage
     //update highscores??
     //displays play again button
@@ -161,11 +166,18 @@ function checkAnswer()
 
     if(!getQuestion())
     {
-        saveScore();
+        saveQuestion.style.display = true;
+        // meant to be a question here!
+        //if true save, capture user input how?
+        //button, reuse submit??
+
+        if(result == true)
+        {
+            saveScore();
+        }
+        else
+        {
+            //just print the score to the screen
+        }
     }
-}
-
-function highscoreBoard()
-{
-
 }
