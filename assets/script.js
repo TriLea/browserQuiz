@@ -78,8 +78,8 @@ function timerCallback()
         testComplete();
     }
 
-    timer.innerHTML = time;
     time--;
+    timer.innerHTML = time;
 }
 
 function getQuestion() //displays next question, can do any amount
@@ -104,7 +104,60 @@ function saveScore() // get this from time
     console.log("savescore called");
     var score = time;
 
+//create question to finish scoreObj
 
+var initals = "NA";
+
+var sample =
+    [
+        {
+            score: 000,
+            initials: "NA"
+        },
+        {
+            score: 000,
+            initials: "NA"
+        },
+        {
+            score: 000,
+            initials: "NA"
+        },
+    ];
+
+    var scores = localStorage.getItem("testScores");
+    var subKudos = {
+        score: score,
+        initials: initals,
+    }
+
+    if (!scores)
+    {
+        var kudos = [
+            subKudos,
+        ];
+        localStorage.setItem("testScores", JSON.stringify(kudos)); 
+    }
+    else
+    {
+        var result = JSON.parse(scores); //pulling out data previously made
+        
+        for (var i = 0; i <= 2; i++)
+        {
+            if (!result[i] || score > result[i].score) //short circuit or
+            {
+                result.splice(i, 0, subKudos);
+                //create new obj and save it to replace it
+                // localStorage.setItem("testScores", JSON.stringify());
+            }
+        }
+    }
+
+    //generate the key based on user initals
+    scores[
+        {}
+    ];
+
+    localStorage.setItem();
     //generate html no no
     //question for initials
     //saves to local storage
@@ -138,32 +191,30 @@ function checkAnswer()
     }
     else
     {
-        //please select before hitting submit
-        //count as wrong
+        alert("Please select an answer");
+        time -= 20;
+        timer.innerHTML = time;
+        return;
     }
 
     if (userChoice.innerHTML == questions[currentQuestion].correctAnswer)
     {
-        //correct
         console.log("correct");
+        time += 20;
+        timer.innerHTML = time;
     }
     else
     {
-        //spit message
         console.log("wrong");
         time -= 20;
+        timer.innerHTML = time;
     }
 
-    
     currentQuestion++; //bumps it up when we are done with it
 
     if(!getQuestion())
     {
         testComplete();
-        
-        // meant to be a question here!
-        //if true save, capture user input how?
-        //button, reuse submit??
     }
 }
 
@@ -176,17 +227,17 @@ function saveYesOrNo()
     }
     else
     {
-        printScore();
+        var quickScore = document.getElementById("printScore");
+        quickScore.innerHTML = time;
+        quickScore.style.display = 'block';
     }
 }
 
-function printScore()
-{
-    HighscoreDisplay.style.display = 'block';
-}
+
 
 function testComplete()
 {
+    // timer.style.display = 'none';
     clearInterval(timerObj);
     questionPage.style.display = 'none';
     saveQuestion.style.display = 'block';
