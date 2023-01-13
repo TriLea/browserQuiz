@@ -5,45 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Tristan's Quiz</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./assets/stylesheet.css">
     </head>
 
     <header>
         <!--nav bar like -->
-        <button class="button" id="highscoresPage" href="/highscores.json">Highscores</button>
+        <button  id="highscoresPage" href="/highscores.json">Highscores</button>
         <button id="timer">the timer</button>
     </header>
 
     <body>
 
-        <button class="button" id="start">START!!!</button>
+        <button  id="start">START!!!</button>
 
         <div id="questionPage" style="display: none">
             <h1 class="" id="Question"></h1>
 
             <!--every radio button needs a connected label tag in order to make innerHTML operable with the input type-->
-            <input type="radio" class="" name="group1" id="place1"></input>
+            <input type="radio"  name="group1" id="place1"></input>
             <label for="place1" id="place1Label">label</label>
 
-            <input type="radio" class="" name="group1" id="place2"></input>
+            <input type="radio"  name="group1" id="place2"></input>
             <label for="place2" id="place2Label">label</label>
 
-            <input type="radio" class="" name="group1" id="place3"></input>
+            <input type="radio"  name="group1" id="place3"></input>
             <label for="place3" id="place3Label">label</label>
 
-            <input type="radio" class="" name="group1" id="place4"></input>
+            <input type="radio"  name="group1" id="place4"></input>
             <label for="place4" id="place4Label">label</label>
 
             <div>
-                <button class="" id="submit">Submit</button>
+                <button  id="submit">Submit</button>
             </div>
         </div>
 
         <div style="display: none" id="saveQuestion">
             <div id="YesNO">
                 <label for="yes_no_radio">Would you like to save</label>
-                <input type="radio" name="yes_no" unchecked>Yes</input>
-                <input type="radio" name="yes_no" unchecked>No</input>
+                <input type="radio" id="Yes" unchecked>Yes</input>
+                <input type="radio" id="No" unchecked>No</input>
                 <button class="" id="Submit2">Submit</button>
                 <!--reuse submit how??-->
             </div>
