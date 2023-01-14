@@ -30,22 +30,22 @@ var questionsList = //self explanitory
     [
         {
             title: "what is CSS?",
-            choices: ["Something that makes you sick", "Cascading stylesheets", "A lowlevel language", "A high level language"],
-            correctAnswer: "Cascading stylesheets"
+            choices: ["A virus", "Something no one wants to do", "A great filter", "Cascading style sheets"],
+            correctAnswer: "Cascading style sheets"
         },
         {
-            title: "What is html?",
-            choices: ["Hyper text markup language", "A thing hackers use", "An IDE", "A low level language"],
+            title: "HTML is?",
+            choices: ["Something you can get a job with", "A thing hackers use", "An IDE", "Hyper text markup language"],
             correctAnswer: "Hyper text markup language"
         },
         {
-            title: "What is javascript?",
-            choices: ["Middle ware", "A video game", "A food", "A scripting language"],
+            title: "Javascript is a?",
+            choices: ["A mistake", "A video game", "Something you can eat", "A scripting language"],
             correctAnswer: "a scripting language"
         },
         {
-            title: "what is a css selector?",
-            choices: ["A way to select html elements", "A data structure", "A empty page", "Hyper text markup language"],
+            title: "A css selector is a:",
+            choices: ["way to select html elements", "data structure", "An empty page", "job title"],
             correctAnswer: "A way to select html elements"
         }
     ]
@@ -88,10 +88,12 @@ function timerCallback() {
 function getQuestion() //displays next question, can do any amount
 {
     if (!questionsList[currentQuestion]) { // !variable is a way of checking if variable is null or undefined
+        console.log("no more questions");
         return false;
     }
+    console.log("getQuestion called");
     var currentQuestionLocal = questionsList[currentQuestion];
-    question.innerHTML = currentQuestionLocal.title; //what is this for?
+    question.innerHTML = currentQuestionLocal.title;
     
     place1Label.innerHTML = currentQuestionLocal.choices[0];
     place2Label.innerHTML = currentQuestionLocal.choices[1];
@@ -159,24 +161,42 @@ function saveScore() // get this from time
     HighscoreDisplay.style.display = 'block';
 
     var scores = localStorage.getItem("testScores");
+
     if (!scores) {
         console.log("no scores");
 
-        var initals = initalsInp.innerHTML;
-        //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
-        var score = time;
-        var empARR = []; 
+        var initials = initalsInp.value;
 
-        var subKudos = {
-            score: score,
-            initials: initals,
+        var scores = [{
+            score: time,
+            initials: initials
+        }];
+
+        console.log(scores);
+
+        localStorage.setItem("testScores", JSON.stringify(scores));
+
+    } else {
+        scores = JSON.parse(scores);
+
+        console.log(scores);
+        var initials = initalsInp.value;
+
+        scores.push({
+            score: time,
+            initials: initials
+        });
+
+        localStorage.setItem("testScores", JSON.stringify(scores));
+
+        //use for loop to display using .innerHTML or textContent
+        for (var i = 0; i < scores.length; i++) {
+            
+            score1.innerHTML = scores[i].initials + " " + scores[i].score;
+            i += 1;
+            score2.innerHTML = scores[i].initials + " " + scores[i].score;
+            i += 1;
+            score3.innerHTML = scores[i].initials + " " + scores[i].score;
         }
-        empARR.push(subKudos);
-        console.log(empARR);
-        localStorage.setItem("testScores",empARR);
-    }
-
-    score1.innerHTML = "test";
-    score2.innerHTML = "test";
-    score3.innerHTML = "test";
+    } 
 }
