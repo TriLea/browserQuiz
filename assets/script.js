@@ -16,23 +16,11 @@ var place4 = document.getElementById("place4");
 var p4Label = document.getElementById("place4Label");
 var submit = document.getElementById("submit");
 
-//DOM hooks for highscore final page
+//DOM hooks for saveScore page
 var saveQuestion = document.getElementById("saveQuestion");
 var saveYes = document.getElementById("Yes");
 var saveNo = document.getElementById("No");
 var HighscoreDisplay = document.getElementById("Highscores-page");
-
-console.log("script load");
-startButton.addEventListener("click", start); //self explanitory
-submit.addEventListener("click", checkAnswer);
-
-// uses event to listen for click on any child of the parent element, will use this to check if i need to save or not
-document.getElementById("Submit2").addEventListener("click", function (event) {
-
-    console.log(this.previousElementSibling.checked);
-    console.log(this.previousElementSibling.previousElementSibling.checked);
-    saveScore();
-});
 
 var questionsList = //self explanitory
     [
@@ -60,6 +48,11 @@ var questionsList = //self explanitory
 
 //start of logic _____________________________________________________________
 
+//hooking up eventlisteners to their respective functions, this creates the logic flow of the program
+startButton.addEventListener("click", start); //self explanitory
+submit.addEventListener("click", checkAnswer); //self explanitory
+document.getElementById("Submit2").addEventListener("click", saveScore); //self explanitory
+
 //initializes a few things it will need.
 var time = 200; //in seconds formated by setInterval
 var currentQuestion = 0; //used as a index to interate through list of n number of questions in question array
@@ -67,7 +60,9 @@ var timerObj; //holds return of setInerval to save and stop timer
 
 function start() {
 
-    questionPage.style.display = 'block'; //forget why i need this?
+    questionPage.style.display = 'block'; //forget why i need this? // why dont i have to hide the previous page?
+
+    //hide previos test, because same button will be used to start test again
 
     startTimer();
     getQuestion();
@@ -82,7 +77,6 @@ function timerCallback() {
     if (time <= 0) { //ends timer and displays highscore page, falls through the decrimentor if timer still has time
         testComplete();
     }
-
     time--;
     timer.innerHTML = time;
 }
@@ -92,7 +86,6 @@ function getQuestion() //displays next question, can do any amount
     if (!questionsList[currentQuestion]) { // !variable is a way of checking if variable is null or undefined
         return false;
     }
-
     var currentQuestionLocal = questionsList[currentQuestion];
     question.innerHTML = currentQuestionLocal.title; //what is this for?
     
@@ -144,7 +137,7 @@ function checkAnswer() {
     currentQuestion++; //bumps it up when we are done with it
 
     if (!getQuestion()) {
-        testComplete();
+        testComplete(); //if there are no more questions
     }
 }
 
@@ -152,112 +145,47 @@ function saveScore() // get this from time
 {
     console.log("savescore called");
 
-    //create question to finish scoreObj
+    if(console.log(this.previousElementSibling.previousElementSibling.checked)) {
 
-    // if () {
-    var scores = localStorage.getItem("testScores");
-    if (!scores) {
-        console.log("no scores");
+        HighscoreDisplay.style.display = 'block';
 
-        var initals = "TL";
-        //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
-        var score = time;
-
-        var empARR = []; 
-
-        var subKudos = {
-            score: score,
-            initials: initals,
+        var scores = localStorage.getItem("testScores");
+        if (!scores) {
+            console.log("no scores");
+    
+            var initals = "TL";
+            //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
+            var score = time;
+            var empARR = []; 
+    
+            var subKudos = {
+                score: score,
+                initials: initals,
+            }
+            empARR.push(subKudos);
+            console.log(empARR);
+            localStorage.setItem("testScores",empARR);
         }
-
-        empARR.push(subKudos);
-        console.log(empARR);
-        localStorage.setItem("testScores",empARR);
+        else {
+            console.log("scores exist");
+        }
+    } else {
+        console.log("no save");
     }
-    else {
-        console.log("scores exist");
+    //question for initials, plus input field for user to enter initials
+    //update highscores??
 
-    }
-    // var initals = localStorage.getItem("initials");
-    // //             // nothing exist, for first time intialize a storage container
-    // var subKudos = {
-    //     score: score,
-    //     initials: initals,
-    // }
-    // // }
-    // // else {
-    // //     // if it exist dont delete or overwrite, just check score to place in
-    // // }
+    //play again button
+    //calls start function
 
-    // var container =
-    //     [
-    //         {
-    //             score: 000,
-    //             initials: "NA"
-    //         },
-    //         {
-    //             score: 000,
-    //             initials: "NA"
-    //         },
-    //         {
-    //             score: 000,
-    //             initials: "NA"
-    //         },
-    //     ];
-
-    // if (!scores) {
-    //     var kudos = [
-    //         subKudos,
-    //     ];
-    //     localStorage.setItem("testScores", JSON.stringify(kudos));
-    // }
-    // else {
-    //     var result = JSON.parse(scores); //pulling out data previously made
-
-    //     for (var i = 0; i == 2; i++) {
-    //         if (!result[i] || score > result[i].score) //short circuit or
-    //         {
-    //             result.splice(i, 0, subKudos);
-    //             //create new obj and save it to replace it
-    //             // localStorage.setItem("testScores", JSON.stringify());
-    //         }
-    //     }
-    // }
-
-    // //generate the key based on user initals
-    // scores[
-    //     {}
-    // ];
-
-    // localStorage.setItem();
-    // //generate html no no
-    // //question for initials
-    // //saves to local storage
-    // //update highscores??
-    // //displays play again button
+    //would you like to play agin?
+    //redisplays start button
+    // if yes, calls start function
+    startButton.style.display = 'block';
 }
 
-// function saveYesOrNo()
-// {
-
-
-//     // if (saveYesNo.innerHTML == 'Yes')
-//     // {
-//     //     console.log("savescore hit");
-//     //     saveScore();
-//     // }
-//     // else
-//     // {
-//     //     var quickScore = document.getElementById("printScore");
-//     //     quickScore.innerHTML = time;
-//     //     quickScore.style.display = 'block';
-//     // }
-// }
-
-
-
 function testComplete() {
-    // timer.style.display = 'none';
+
     clearInterval(timerObj);
     questionPage.style.display = 'none';
     saveQuestion.style.display = 'block';
