@@ -18,10 +18,13 @@ var submit = document.getElementById("submit");
 
 //DOM hooks for saveScore page
 var saveQuestion = document.getElementById("saveQuestion");
-var saveYes = document.getElementById("Yes");
-var saveNo = document.getElementById("No");
 var initalsInp = document.getElementById("name");
+var playAgain = document.getElementById("playAgain");
 var HighscoreDisplay = document.getElementById("Highscores-page");
+//score list of 3
+var score1 = document.getElementById("score1");
+var score2 = document.getElementById("score2");
+var score3 = document.getElementById("score3");
 
 var questionsList = //self explanitory
     [
@@ -52,7 +55,7 @@ var questionsList = //self explanitory
 //hooking up eventlisteners to their respective functions, this creates the logic flow of the program
 startButton.addEventListener("click", start); //self explanitory
 submit.addEventListener("click", checkAnswer); //self explanitory
-document.getElementById("Submit2").addEventListener("click", saveScore); //self explanitory
+document.getElementById("Submit2").addEventListener("click", saveScore); // save score at end of quiz
 
 //initializes a few things it will need.
 var time = 200; //in seconds formated by setInterval
@@ -61,10 +64,10 @@ var timerObj; //holds return of setInerval to save and stop timer
 
 function start() {
 
-    questionPage.style.display = 'block'; //forget why i need this? // why dont i have to hide the previous page?
-
-    //hide previos test, because same button will be used to start test again
-
+    currentQuestion = 0; //reset current question
+    HighscoreDisplay.style.display = 'none'; //hide previous test
+    saveQuestion.style.display = 'none'; //hide previous test
+    questionPage.style.display = 'block'; //show question page
     startTimer();
     getQuestion();
 }
@@ -142,52 +145,38 @@ function checkAnswer() {
     }
 }
 
-function saveScore() // get this from time
-{
-    console.log("savescore called");
-
-    if(this.previousElementSibling.previousElementSibling.checked) {
-
-        HighscoreDisplay.style.display = 'block';
-
-        var scores = localStorage.getItem("testScores");
-        if (!scores) {
-            console.log("no scores");
-    
-            var initals = initalsInp.innerHTML;
-            //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
-            var score = time;
-            var empARR = []; 
-    
-            var subKudos = {
-                score: score,
-                initials: initals,
-            }
-            empARR.push(subKudos);
-            console.log(empARR);
-            localStorage.setItem("testScores",empARR);
-        }
-        else {
-            console.log("scores exist");
-        }
-    } else {
-        console.log("no save");
-    }
-    //question for initials, plus input field for user to enter initials
-    //update highscores??
-
-    //play again button
-    //calls start function
-
-    //would you like to play agin?
-    //redisplays start button
-    // if yes, calls start function
-    startButton.style.display = 'block';
-}
-
 function testComplete() {
 
     clearInterval(timerObj);
     questionPage.style.display = 'none';
     saveQuestion.style.display = 'block';
+}
+
+function saveScore() // get this from time
+{
+    console.log("savescore called");
+
+    HighscoreDisplay.style.display = 'block';
+
+    var scores = localStorage.getItem("testScores");
+    if (!scores) {
+        console.log("no scores");
+
+        var initals = initalsInp.innerHTML;
+        //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
+        var score = time;
+        var empARR = []; 
+
+        var subKudos = {
+            score: score,
+            initials: initals,
+        }
+        empARR.push(subKudos);
+        console.log(empARR);
+        localStorage.setItem("testScores",empARR);
+    }
+
+    score1.innerHTML = "test";
+    score2.innerHTML = "test";
+    score3.innerHTML = "test";
 }
