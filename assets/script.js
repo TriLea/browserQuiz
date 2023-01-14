@@ -20,6 +20,7 @@ var submit = document.getElementById("submit");
 var saveQuestion = document.getElementById("saveQuestion");
 var saveYes = document.getElementById("Yes");
 var saveNo = document.getElementById("No");
+var initalsInp = document.getElementById("name");
 var HighscoreDisplay = document.getElementById("Highscores-page");
 
 var questionsList = //self explanitory
@@ -145,7 +146,7 @@ function saveScore() // get this from time
 {
     console.log("savescore called");
 
-    if(console.log(this.previousElementSibling.previousElementSibling.checked)) {
+    if(this.previousElementSibling.previousElementSibling.checked) {
 
         HighscoreDisplay.style.display = 'block';
 
@@ -153,7 +154,7 @@ function saveScore() // get this from time
         if (!scores) {
             console.log("no scores");
     
-            var initals = "TL";
+            var initals = initalsInp.innerHTML;
             //localStorage.getItem("initials"); need to capture input getelement by id enter input field 
             var score = time;
             var empARR = []; 
