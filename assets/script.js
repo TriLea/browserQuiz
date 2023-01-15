@@ -188,15 +188,14 @@ function saveScore() // get this from time
         });
 
         localStorage.setItem("testScores", JSON.stringify(scores));
-
-        //use for loop to display using .innerHTML or textContent
-        for (var i = 0; i < scores.length; i++) {
-            
-            score1.innerHTML = scores[i].initials + " " + scores[i].score;
-            i += 1;
-            score2.innerHTML = scores[i].initials + " " + scores[i].score;
-            i += 1;
-            score3.innerHTML = scores[i].initials + " " + scores[i].score;
-        }
     } 
+    //use for loop to display using .innerHTML or textContent
+    for (var i = 0; i < scores.length; i++) {
+            
+        score1.innerHTML = scores[i].initials + " " + scores[i].score;
+        i += 1;
+        score2.innerHTML = scores[i].initials + " " + scores[i].score;
+        i += 1;
+        score3.innerHTML = scores[i].initials + " " + scores[i].score;
+    }
 }
